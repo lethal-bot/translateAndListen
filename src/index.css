@@ -113,33 +113,6 @@ h2 span {
   background-color: var(--primary-light-color);
 }
 
-/* .round {
-  border-radius: 2rem;
-  height: 2.5rem;
-  width: 2.5rem;
-  border: none;
-  font-size: 0.7rem;
-  color: var(--tertiary-main-color);
-  background-color: #eb4646;
-  transition: all 0.5s ease;
-}
-
-.round:hover {
-  cursor: pointer;
-  background-color: #f06969;
-} */
-
-/* .middle-left {
-  margin: 1rem 0;
-} */
-
-/* .middle-left {
-  width: 15rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-} */
-
 .dropdown {
   width: 10rem;
   padding: 0.5rem;
@@ -184,11 +157,11 @@ h2 span {
   margin: 0.7rem 0 0 0;
 }
 
-.red {
+.black {
   background-color: #131212;
   color: var(--tertiary-main-color);
 }
 
-.red:hover {
+.black:hover {
   background-color: #2b2929;
 }
