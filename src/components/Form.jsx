@@ -1,11 +1,27 @@
 import play from "../../playbutton.png";
 import Button from "./Button";
 import Select from "./Select";
-import { detectLanguage, translation } from "../utils/api";
+import Audio from "./Audio";
+import { translation } from "../utils/api";
 import { useState } from "react";
 
 export default function Form() {
-  const [output, setOutput] = new useState("");
+  const [output, setOutput] = new useState("this is output");
+  const [input, setInput] = new useState("");
+  const [select, setSelect] = new useState("en");
+
+  function selectHandler(e) {
+    setSelect(e.target.value);
+  }
+
+  function inputHandler(e) {
+    setInput(e.target.value);
+  }
+
+  function resetHandler() {
+    setOutput("");
+    setInput("");
+  }
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -13,24 +29,36 @@ export default function Form() {
     const input = fd.get("input");
     const getLanguage = fd.get("getLanguage");
     const postLanguage = fd.get("postLanguage");
-    detectLanguage(input);
     setOutput(await translation(input, getLanguage, postLanguage));
   }
   return (
     <form className="form" onSubmit={submitHandler}>
       <div className="top-section">
         <label htmlFor="input">Enter a sentence to translate</label>
-        <Select className="dropdown" name="getLanguage" val="English"></Select>
+        <Select
+          className="dropdown"
+          name="getLanguage"
+          val="English"
+          onChange={selectHandler}
+        ></Select>
       </div>
-      <input id="input" type="text" name="input" />
+      <input
+        id="input"
+        type="text"
+        name="input"
+        value={input}
+        onChange={inputHandler}
+      />
       <div className="middle-section">
         <Button className="button" type="submit" value="Translate"></Button>
-        <Button
+        <Audio
           className="play-button"
           type="button"
           value="Listen"
           img={play}
-        ></Button>
+          text={input}
+          languageCode={select}
+        ></Audio>
       </div>
       <div className="gap">
         <div className="dotted"></div>
@@ -40,16 +68,23 @@ export default function Form() {
         <Select className="dropdown" name="postLanguage"></Select>
       </div>
       <div id="output" className="answer">
-        {output}
+        <p className="outputWrap">{output}</p>
       </div>
       <div className="bottom">
-        <Button className="button black" type="reset" value="Reset"></Button>
         <Button
+          className="button black"
+          type="button"
+          value="Reset"
+          onClick={resetHandler}
+        ></Button>
+        <Audio
           className="play-button"
           type="button"
           value="Listen"
           img={play}
-        ></Button>
+          text={output}
+          languageCode="hi"
+        ></Audio>
       </div>
     </form>
   );

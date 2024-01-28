@@ -1,4 +1,4 @@
-import { languages } from "../utils/api";
+import { languageArray } from "../utils/languageArray";
 import { useState } from "react";
 export default function Select({ className, name, val }) {
   const [value, setValue] = useState(val === "English" ? "en" : "hi");
@@ -13,7 +13,7 @@ export default function Select({ className, name, val }) {
       className={className}
       name={name}
     >
-      {languages.map((lang) => (
+      {languageArray.map((lang) => (
         <option key={lang.language} value={lang.language}>
           {lang.name}
         </option>

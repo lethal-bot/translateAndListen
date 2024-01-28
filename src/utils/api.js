@@ -1,44 +1,4 @@
-const url =
-    "https://google-translate1.p.rapidapi.com/language/translate/v2/languages?target=en";
-const options = {
-    method: "GET",
-    headers: {
-        "Accept-Encoding": "application/gzip",
-        "X-RapidAPI-Key": '3f389ce214msh76a1b6b77e1ee1fp1762dcjsn97384994a613',
-        "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-    },
-};
-let result;
-try {
-    const response = await fetch(url, options);
-    result = await response.json();
-} catch (error) {
-    prompt(error);
-}
-
-export async function detectLanguage(input) {
-    const url = 'https://google-translate1.p.rapidapi.com/language/translate/v2/detect';
-    const options = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Accept-Encoding': 'application/gzip',
-            'X-RapidAPI-Key': '3f389ce214msh76a1b6b77e1ee1fp1762dcjsn97384994a613',
-            'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
-        },
-        body: new URLSearchParams({
-            q: input
-        })
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        console.log(result);
-    } catch (error) {
-        console.error(error);
-    }
-}
+const translationKey = 'da071dc83cmsh6d6848c5171272fp1e7aacjsn1a4c8b14fab0'
 
 export async function translation(input, getLanguage, postLanguage) {
     const url =
@@ -48,7 +8,7 @@ export async function translation(input, getLanguage, postLanguage) {
         headers: {
             "content-type": "application/x-www-form-urlencoded",
             "Accept-Encoding": "application/gzip",
-            "X-RapidAPI-Key": '3f389ce214msh76a1b6b77e1ee1fp1762dcjsn97384994a613',
+            "X-RapidAPI-Key": translationKey,
             "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
         },
         body: new URLSearchParams({
@@ -69,4 +29,38 @@ export async function translation(input, getLanguage, postLanguage) {
 }
 
 
-export const languages = result.data.languages;
+
+
+const voicekey = '1f02c55c4amsh656b3023d5ada30p1e104ajsn0f32d3f1b131'
+//auido api
+
+
+//audio generation
+export async function generateAudio(voiceCode, text) {
+    const url = 'https://cloudlabs-text-to-speech.p.rapidapi.com/synthesize';
+    const options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-RapidAPI-Key': voicekey,
+            'X-RapidAPI-Host': 'cloudlabs-text-to-speech.p.rapidapi.com'
+        },
+        body: new URLSearchParams({
+            voice_code: voiceCode,
+            text: text,
+            speed: '1.00',
+            pitch: '1.00',
+            output_type: 'audio_url'
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        // console.log(result)
+        const re = await result.result.audio_url;
+        return re
+    } catch (error) {
+        console.error(error);
+    }
+}
